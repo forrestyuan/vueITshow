@@ -3,7 +3,7 @@
     <mt-header :fixed="false" title="IT show 休闲一刻">
       <mt-button slot="right" @click="handleSearch">搜影片</mt-button>
     </mt-header>
-    <mt-navbar :fixed="scrolled" v-model="navselectd">
+    <mt-navbar fixed v-model="navselectd">
       <mt-tab-item id="1">热门影片</mt-tab-item>
       <mt-tab-item id="2">电影院</mt-tab-item>
     </mt-navbar>
@@ -11,7 +11,7 @@
     <mt-tab-container v-model="navselectd">
       <mt-tab-container-item id="1">
        <ul class="movielist" >
-          <li class="item" v-for="item in moivelist">
+          <li class="item" v-for="(item,key) in moivelist" :key="key">
             <a :href="'/movie/'+item.id+'?_v_=yes'" data-bid="b_MWTWF" data-lab="{ index:1, movie_id:item.id, module_name:'cell' }">
               <div class="movie-cover">
                   <img id="img" class="lazy" data-src="item.img" :src="item.img">
@@ -33,7 +33,7 @@
           </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="n in 4" :title="'测试 ' + n" />
+        <mt-cell v-for="n in 4" :title="'测试 ' + n" :key="n"/>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -47,7 +47,6 @@ export default {
   props:['moiveactive'],
   data(){
     return{
-      scrolled: false,  //all
       navselectd:'1',
       v2d:'v2d',
       v3d:'v3d',

@@ -8,6 +8,10 @@
 | ------------- |:-------------:| -----:|
 | ![动图](https://github.com/forrestyuan/vueITshow/blob/master/demo3.gif)    | ![动图](https://github.com/forrestyuan/vueITshow/blob/master/demo1.gif)| ![动图](https://github.com/forrestyuan/vueITshow/blob/master/demo2.gif) |
 
+# 更新
+- ## 修复滑动事件与切屏冲突 
+
+
 ## Build Setup
 
 ``` bash

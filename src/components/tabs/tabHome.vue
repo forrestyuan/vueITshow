@@ -1,15 +1,20 @@
 <template>
-  <div id="container">
+  <div>
       <!-- 首页 -->
-    <mt-header :fixed="scrolled" title="IT show"></mt-header>
-        <mt-swipe :show-indicators="false" :stopPropagation="true" :style="{height:150+'px'}">
+        <mt-header fixed  title="IT show"></mt-header>
+        <mt-swipe :show-indicators="false" :stopPropagation="true" :style="{height:150+'px',marginTop:'40px'}">
           <mt-swipe-item><img :style="{height:150+'px'}" src="../../assets/lunbo1.png" alt="img"></mt-swipe-item>
           <mt-swipe-item><img :style="{height:150+'px'}" src="../../assets/lunbo4.png" alt="img"></mt-swipe-item>
           <mt-swipe-item><img :style="{height:150+'px'}" src="../../assets/lunbo5.png" alt="img"></mt-swipe-item>
         </mt-swipe>
          <mt-cell value="精品干货(每日更新)" :style="{textAlign:'left',fontSize:12+'px'}"><img slot="icon" src="../../assets/jishi.png" height="30"></mt-cell>
-        <ul v-infinite-scroll="loadhome" infinite-scroll-disabled="loadingH" infinite-scroll-distance="15">
-          <li v-for="item in homelist"> 
+        <mt-navbar v-model="topTabSelected">
+          <mt-tab-item id="0">选项一</mt-tab-item>
+          <mt-tab-item id="1">选项二</mt-tab-item>
+          <mt-tab-item id="2">选项三</mt-tab-item>
+        </mt-navbar>
+        <ul v-infinite-scroll="getHomeList" infinite-scroll-disabled="loadingH" infinite-scroll-distance="20">
+          <li v-for="(item,key) in homelist" :key="key"> 
             <a :href="item.url" target="_blank">
             <div class="homelistItem">
               <div class="hiDesc">{{item.desc}}</div>
@@ -29,34 +34,29 @@
 <script>
 import {Header, Swipe, SwipeItem,Toast, InfiniteScroll, Indicator } from 'mint-ui';
 import axios from 'axios';
+import{mixin} from '../../util/index.js'
 
 export default {
   name: 'tabhome',
   props:['homeactive'],
  data(){
     return{
-      scrolled: false,
       homepage:1, //zhuye
       loadingH:false, //home
       homelist:[], //zhuye
+
+      topTabSelected:"0",
+      groupList:[],
+      subList:[]
+
     }
   },
   methods: {
-    handleScrollHome () {
-      //头部固定
-      this.scrolled = window.scrollY >= 20; 
-    },
-    //mintui 的滚动加载
-    loadhome() {
-      if(this.homeactive == 'zhuye'){
-        this.showIndicator();
-        this.getHomeList(this.homepage ++)
-      }
-    },
     //首页列表
-    getHomeList(page){
-      this.loadingH=true;
-      axios.get('http://gank.io/api/data/all/10/'+page)
+    getHomeList(){
+      this.homepage ++
+      this.showIndicator();
+      axios.get('http://gank.io/api/data/all/5/'+this.homepage)
         .then(response=>{
           let data = response.data.results;
           for (let i = 0; i < data.length; i++) {
@@ -64,22 +64,22 @@ export default {
               this.homelist.push(data[i]);
             }
           }
-          this.loadingH = false; 
-          Indicator.close();
+         this.closeIndicator();
         })
         .catch(error=>{
-          Indicator.close();
-           this.loadingH = false; 
-            this.toast();
+         this.closeIndicator(); 
+         this.toast();
         });
     },
     //加载进度条
     showIndicator(){
-      this.loading = true;
         Indicator.open({
         text: '加载中...',
         spinnerType: 'fading-circle'
       });
+    },
+    closeIndicator(){
+      Indicator.close();
     },
     //toast 封装
     toast(message="请求错误"){
@@ -88,52 +88,13 @@ export default {
   },
   //vue 钩子函数
   created () {
-    window.addEventListener('scroll', this.handleScrollHome);
-    this.getHomeList(this.homepage ++);
-  }
+    this.getHomeList();
+  },
+  mixins:[mixin]
 }
 </script>
 
 <style scoped>
-a{
-  text-decoration: none;
-}
-ul{
-  text-align: center;
-  list-style: none;
-  background-color: #eee;
-  padding: 10px 0;
-}
-ul li{
-  display: inline-block;
-  width: 96%;
-  height: auto;
-  margin: 5px auto;
-  background-color: white;
-  border-radius: 5px;
-  border-bottom: #ccc solid 1px;
-}
-
-ul li img{
-  display: inline-block;
-  width: 100%;
-}
-html,body{
-  overflow: hidden;
-  margin:0;
-  padding: 0;
-}
-#container {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin:0;
-  padding: 0;
-  height: 100%;
-}
-
 .homelistItem{
   margin: 5px;
 }

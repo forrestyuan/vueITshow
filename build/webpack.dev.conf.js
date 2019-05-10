@@ -9,7 +9,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
+const PORT = process.env.PORT
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -51,11 +51,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true
     }),
   ]
-})
+}) 
 
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
   portfinder.getPort((err, port) => {
+    console.log(port)
     if (err) {
       reject(err)
     } else {
@@ -67,7 +68,7 @@ module.exports = new Promise((resolve, reject) => {
       // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
         compilationSuccessInfo: {
-          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
+          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${process.env.PORT }`],
         },
         onErrors: config.dev.notifyOnErrors
         ? utils.createNotifierCallback()

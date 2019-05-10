@@ -1,7 +1,7 @@
 <template>
 <div id="welcome">
    <img class="welcomepage" src="../assets/webp.jpg" alt="">
-   <router-link to="/index" id="btn"><mt-badge type="success">{{time}}</mt-badge></router-link>
+   <mt-badge type="success">{{time}}</mt-badge>
    
 </div>
 </template>
@@ -11,14 +11,14 @@ export default {
     name:'welcome',
     data(){
         return{
-            time:20
+            time:5
         }
     },created(){
         let i = setInterval(()=>{
             this.time--;
             if(this.time <= 0){
                 clearInterval(i);
-                document.getElementById("btn").click();
+                this.$router.push("/index");
             }
         },1000)
     }
