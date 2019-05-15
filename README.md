@@ -1,31 +1,29 @@
 # vueITshow
 
-> an app create by vue+mint-ui
->使用 vue2.0+mint-ui实现的小app，喜欢就 star 一下吧。
-
-# demo图
-|     打开app欢迎界面   | 每个界面的展示1        | 每个界面的展示2  |
-| ------------- |:-------------:| -----:|
-| ![动图](https://github.com/forrestyuan/vueITshow/blob/master/demo3.gif)    | ![动图](https://github.com/forrestyuan/vueITshow/blob/master/demo1.gif)| ![动图](https://github.com/forrestyuan/vueITshow/blob/master/demo2.gif) |
-
-# 更新
-- ## 修复滑动事件与切屏冲突 
+>使用 vue2.0+mint-ui实现的小app 入门Demo，喜欢就 star 一下吧。
 
 
-## Build Setup
+## demo图
+![动图](https://github.com/forrestyuan/vueITshow/blob/master/vueITshow.gif)   
+
+## 更新 2019-05
+-  修复滑动事件与切屏冲突 
+-  搜索功能Bug fixed
+-  Tabbar 点击切换bug
+
+
+## 安装
 
 ``` bash
-# install dependencies
+# 安装依赖
 npm install
 
-# serve with hot reload at localhost:8080
+# 启动服务
 npm run dev
 
-# build for production with minification
+# 打包
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
